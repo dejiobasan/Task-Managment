@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const TasksSchema = new mongoose.Schema({
+    Username: {type: String, required: true},
     Title: {type: String, required: true},
     Description: {type: String, required: true},
     Category: {type: String, required: true},
