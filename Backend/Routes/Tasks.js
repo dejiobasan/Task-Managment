@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let Task = require("../Models/Task.js");
 
+// create Task
 router.route("/createTask").post((req, res) => {
   const {
     username,
@@ -10,6 +11,7 @@ router.route("/createTask").post((req, res) => {
     duration,
     startdate,
     duedate,
+    status,
   } = req.body;
   const newTask = new Task({
     Username: username,
@@ -19,6 +21,7 @@ router.route("/createTask").post((req, res) => {
     Duration: duration,
     StartDate: startdate,
     DueDate: duedate,
+    Status: status,
   });
   newTask
     .save()
@@ -26,6 +29,31 @@ router.route("/createTask").post((req, res) => {
     .catch((err) => res.status(400).json("Errors: " + err));
 });
 
-router.route("/myTasks").get((req, res) => {
-  Task.find();
+//view User Tasks
+router.route("/myTasks/:username").get((req, res) => {
+  Task.findOne(req.params.username)
+    .then((task) => res.json(task))
+    .catch((err) => res.status(400).json("Errors: " + err));
 });
+
+//update User Task
+router.route("/updateTask/:username").post((req, res) => {
+  Task.findOne(req.params.username)
+    .then(task => {
+      task.Username = req.body.username;
+      task.Title = req.body.title;
+      task.Description = req.body.description;
+      task.Category = req.body.category;
+      task.Duration = req.body.duration;
+      task.StartDate = req.body.startdate;
+      task.DueDate = req.body.duedate;
+      task.Status = req.body.status;
+      task
+        .save()
+        .then(() => res.json("Task updated!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Errors: " + err));
+});
+
+//Delete User Task
