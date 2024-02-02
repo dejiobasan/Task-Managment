@@ -26,14 +26,14 @@ router.route("/createTask").post((req, res) => {
   newTask
     .save()
     .then(() => res.json("Task Created!"))
-    .catch((err) => res.status(400).json("Errors: " + err));
+    .catch(err => res.status(400).json("Errors: " + err));
 });
 
 //view User Tasks
 router.route("/myTasks/:username").get((req, res) => {
   Task.findOne(req.params.username)
-    .then((task) => res.json(task))
-    .catch((err) => res.status(400).json("Errors: " + err));
+    .then(task => res.json(task))
+    .catch(err => res.status(400).json("Errors: " + err));
 });
 
 //update User Task
@@ -51,9 +51,16 @@ router.route("/updateTask/:username").post((req, res) => {
       task
         .save()
         .then(() => res.json("Task updated!"))
-        .catch((err) => res.status(400).json("Error: " + err));
+        .catch(err => res.status(400).json("Error: " + err));
     })
-    .catch((err) => res.status(400).json("Errors: " + err));
+    .catch(err => res.status(400).json("Errors: " + err));
 });
 
 //Delete User Task
+router.route("/deleteTask/:title").delete((req, res) => {
+  Task.findOneAndDelete(req.params.title)
+    .then(() => res.json("Task Deleted!"))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
+module.exports = router;
