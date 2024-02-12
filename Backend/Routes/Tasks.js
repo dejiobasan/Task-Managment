@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let Task = require("../Models/Task.js");
+const authenticateToken = require("./Users.js").authenticateToken;
 
 // create Task
 router.route("/createTask").post((req, res) => {
@@ -29,8 +30,8 @@ router.route("/createTask").post((req, res) => {
     .catch(err => res.status(400).json("Errors: " + err));
 });
 
-//view User Tasks
-router.route("/myTasks/:username").get((req, res) => {
+//view User Tasks with middleware authentication
+router.route("/myTasks/:username", authenticateToken).get((req, res) => {
   Task.findOne(req.params.username)
     .then(task => res.json(task))
     .catch(err => res.status(400).json("Errors: " + err));
