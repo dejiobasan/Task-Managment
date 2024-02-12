@@ -33,7 +33,7 @@ router.route("/createTask").post((req, res) => {
 //view User Tasks with middleware authentication
 router.route("/myTasks/:username", authenticateToken).get((req, res) => {
   Task.findOne(req.params.username)
-    .then(task => res.json(task))
+    .then(task => res.json(task.filter(task => task.Username === req.params.username)))
     .catch(err => res.status(400).json("Errors: " + err));
 });
 
