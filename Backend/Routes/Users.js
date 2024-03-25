@@ -50,8 +50,8 @@ router.route("/Login").post((req, res) => {
                     expiresIn: process.env.JWT_expires_in,
                 });
                 res.status(200).json({
-                    success: true,
                     token: token,
+                    success: true,
                     message: "Login successful",
                 });
             } else {
@@ -69,4 +69,19 @@ router.route("/Login").post((req, res) => {
   });
 });
 
-module.exports = router;
+//middleware
+function authenticateToken(req, res, next) {
+  const authHeader = req.header['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null) return res.status(401).send('No token provided')
+  
+  jwt.verify(token, process.env.jwtSecret, (err, user) => {
+    if(err) return res.sendStatus(403)
+    req.user = user;
+    next()
+  });
+};
+
+
+
+module.exports = {router, authenticateToken};
