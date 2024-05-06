@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { userNavigate } from "react-router-dom"
 
 function Home() {
-  const navigate = userNavigate();
   const [newUser, setNewUser] = useState({
     username: "",
     password: "",
@@ -17,7 +15,6 @@ function Home() {
     event.preventDefault();
     console.log(newUser);
     //axios post request
-    navigate("/signin");
   }
 
   return (
@@ -45,7 +42,7 @@ function Home() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                 Create a Username:
               </label>
               <div className="mt-2">
@@ -53,7 +50,7 @@ function Home() {
                   id="username"
                   name="username"
                   type="text"
-                  autoComplete="email"
+                  autoComplete="username"
                   value={newUser.username}
                   onChange={handleChange}
                   required
@@ -75,6 +72,7 @@ function Home() {
                   id="password"
                   name="password"
                   type="password"
+                  autoComplete="current-password"
                   value={newUser.password}
                   onChange={handleChange}
                   required
