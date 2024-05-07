@@ -1,14 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-// import plugin from "tailwindcss/plugin";
+/*eslint-env node*/
 
-export default {
+module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
-  // ...
+  //...
   plugins: [
-    // require("@tailwindcss/forms"),
-  ],
-};
-
+    require("@tailwindcss/forms"),
+  ]
+}

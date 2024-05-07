@@ -14,7 +14,7 @@ function Home() {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(newUser);
-    //axios post request
+    //axios post request then redirect to signin page 
   }
 
   return (
@@ -42,7 +42,10 @@ function Home() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Create a Username:
               </label>
               <div className="mt-2">
