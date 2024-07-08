@@ -1,6 +1,6 @@
 const router = require("express").Router();
 let Task = require("../Models/Task.js");
-const authenticateToken = require("./Users.js").authenticateToken;
+const authenticateToken = require("../Middleware/AuthenticateUser.js").authenticateToken;
 
 // create Task
 router.route("/createTask").post((req, res) => {
@@ -20,8 +20,8 @@ router.route("/createTask").post((req, res) => {
     Description: description,
     Category: category,
     Duration: duration,
-    StartDate: startdate,
-    DueDate: duedate,
+    StartDate: Date.parse(startdate),
+    DueDate: Date.parse(duedate),
     Status: status,
   });
   newTask

@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
-const port = 5000;
+const port = 8000;
 
 app.use(cors());
 app.use(express.json());
@@ -25,5 +25,5 @@ app.use("/Tasks", TasksRouter);
 app.use("/Users", UsersRouter);
 
 app.listen(port, function () {
-    console.log("server started at port 5000.");
+    console.log(`server started at port ${port}.`);
 });

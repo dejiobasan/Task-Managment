@@ -1,4 +1,4 @@
-import { useState  } from "react";
+import { useState } from "react";
 
 
 function CreateTask() {
@@ -9,8 +9,8 @@ function CreateTask() {
     description: "",
     category: "",
     duration: "",
-    startdate: "",
-    duedate: "",
+    startdate: new Date(),
+    duedate: new Date(),
     status: ""
   });
 

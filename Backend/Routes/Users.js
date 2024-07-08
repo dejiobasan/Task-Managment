@@ -8,7 +8,7 @@ require("dotenv").config();
 //Create a User
 router.route("/CreateUser").post((req, res) => {
   const { username, password } = req.body;
-  const saltRounds = process.env.saltRounds;
+  const saltRounds = 10;
   bcrypt.hash(password, saltRounds, (err, hash) => {
     const newUser = new User({
       Username: username,
@@ -53,6 +53,9 @@ router.route("/Login").post((req, res) => {
                     token: token,
                     success: true,
                     message: "Login successful",
+                    user: {
+                      username: username,
+                    }
                 });
             } else {
                 res.status(401).json({
@@ -69,19 +72,4 @@ router.route("/Login").post((req, res) => {
   });
 });
 
-//middleware
-function authenticateToken(req, res, next) {
-  const authHeader = req.header['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
-  if (token == null) return res.status(401).send('No token provided')
-  
-  jwt.verify(token, process.env.jwtSecret, (err, user) => {
-    if(err) return res.sendStatus(403)
-    req.user = user;
-    next()
-  });
-};
-
-
-
-module.exports = {router, authenticateToken};
+module.exports = router;
