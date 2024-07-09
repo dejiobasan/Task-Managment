@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 function Home() {
   const [newUser, setNewUser] = useState({
@@ -14,6 +15,12 @@ function Home() {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(newUser);
+    axios.post("http://localhost:8000/Users/CreateUser", newUser)
+      .then(res => console.log(res.data));
+    setNewUser({
+      username: "",
+      password: "",
+    })
     //axios post request then redirect to signin page 
   }
 

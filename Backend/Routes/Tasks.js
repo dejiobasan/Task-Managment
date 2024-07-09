@@ -1,6 +1,6 @@
 const router = require("express").Router();
 let Task = require("../Models/Task.js");
-const authenticateToken = require("../Middleware/AuthenticateUser.js").authenticateToken;
+const authenticateToken = require("../Middleware/AuthenticateUser.js");
 
 // create Task
 router.route("/createTask").post((req, res) => {
@@ -30,24 +30,24 @@ router.route("/createTask").post((req, res) => {
     .catch(err => res.status(400).json("Errors: " + err));
 });
 
-//view User Tasks with middleware authentication
-router.route("/myTasks/:username", authenticateToken).get((req, res) => {
-  Task.findOne(req.params.username)
-    .then(task => res.json(task.filter(task => task.Username === req.params.username)))
+// view User Tasks with middleware authentication
+router.route("/myTasks/:id").get(authenticateToken, (req, res) => {
+  Task.findById(req.params.id)
+    .then(task => res.json(task))//.filter(task => task.id === req.params.id))
     .catch(err => res.status(400).json("Errors: " + err));
 });
 
 //update User Task
-router.route("/updateTask/:username").post((req, res) => {
-  Task.findOne(req.params.username)
+router.route("/updateTask/:id").post((req, res) => {
+  Task.findById(req.params.id)
     .then(task => {
       task.Username = req.body.username;
       task.Title = req.body.title;
       task.Description = req.body.description;
       task.Category = req.body.category;
       task.Duration = req.body.duration;
-      task.StartDate = req.body.startdate;
-      task.DueDate = req.body.duedate;
+      task.StartDate = Date.parse(req.body.startdate);
+      task.DueDate = Date.parse(req.body.duedate);
       task.Status = req.body.status;
       task
         .save()
@@ -58,8 +58,8 @@ router.route("/updateTask/:username").post((req, res) => {
 });
 
 //Delete User Task
-router.route("/deleteTask/:title").delete((req, res) => {
-  Task.findOneAndDelete(req.params.title)
+router.route("/deleteTask/:id").delete((req, res) => {
+  Task.findOneAndDelete(req.params.id)
     .then(() => res.json("Task Deleted!"))
     .catch(err => res.status(400).json("Error: " + err));
 });

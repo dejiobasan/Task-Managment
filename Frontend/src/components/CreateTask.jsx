@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState } from "react"
+import axios from "axios"
 
 
 function CreateTask() {
@@ -22,6 +23,8 @@ function CreateTask() {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(task);
+    axios.post("http://localhost:8000/Tasks/createTask", task)
+      .then(res => console.log(res.data));
     //axios post request then redirect to createTask page
   }
  
