@@ -6,6 +6,7 @@ const TasksSchema = new mongoose.Schema({
     Description: {type: String, required: true},
     Category: {type: String, required: true},
     Duration: {type: Number, required: true},
+    Type: {type: String, required: true},
     StartDate: {type: Date, required: true},
     DueDate: {type: Date, required: true},
     Status: {type: String, required: true}

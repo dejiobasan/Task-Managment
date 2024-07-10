@@ -10,6 +10,7 @@ router.route("/createTask").post((req, res) => {
     description,
     category,
     duration,
+    type,
     startdate,
     duedate,
     status,
@@ -20,6 +21,7 @@ router.route("/createTask").post((req, res) => {
     Description: description,
     Category: category,
     Duration: duration,
+    Type: type,
     StartDate: Date.parse(startdate),
     DueDate: Date.parse(duedate),
     Status: status,
@@ -46,6 +48,7 @@ router.route("/updateTask/:id").post((req, res) => {
       task.Description = req.body.description;
       task.Category = req.body.category;
       task.Duration = req.body.duration;
+      task.type = req.body.type;
       task.StartDate = Date.parse(req.body.startdate);
       task.DueDate = Date.parse(req.body.duedate);
       task.Status = req.body.status;
