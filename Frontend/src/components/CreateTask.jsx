@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
 function CreateTask() {
   const [task, setTask] = useState({
@@ -16,6 +17,8 @@ function CreateTask() {
     status: "",
   });
 
+  const navigate = useNavigate();
+
   function handleChange(event) {
     const { value, name } = event.target;
     setTask((prevState) => ({ ...prevState, [name]: value }));
@@ -23,10 +26,10 @@ function CreateTask() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(task);
     axios
       .post("http://localhost:8000/Tasks/createTask", task)
-      .then((res) => console.log(res.data));
+      .then(() => navigate("/userpage"))
+      .catch((err) => console.log(err));
     //axios post request then redirect to UserPage.jsx page
   }
 
